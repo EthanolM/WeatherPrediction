@@ -13,7 +13,7 @@ export default {
     data() {
         return {
             currentTime: this.$moment().format("H:mm:ss"),
-            currentDate: this.$moment().format("HH/dddd")
+            currentDate: this.$moment().format("LL dddd")
         }
     },
 
@@ -32,7 +32,7 @@ export default {
             this.currentTime = this.$moment().format("H:mm:ss");
         },
         getDate() {
-            this.currentDate = this.$moment().format("HH/dddd");
+            this.currentDate = this.$moment().format("LL dddd");
         }
     }
 
