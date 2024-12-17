@@ -12,14 +12,16 @@
 export default {
     data() {
         return {
-            currentTime: this.$moment().format("H:mm:ss"),
+            currentTime: this.$moment().format("H:mm"),
             currentDate: this.$moment().format("LL dddd")
         }
     },
 
     mounted() {
         // 在组件挂载时启动定时器
-        this.timer = setInterval(this.getTime, 1000);
+        this.timer = setInterval(() => {
+            this.getTime();
+            }, 1000);
     },
 
     beforeUnmount() {
@@ -29,10 +31,9 @@ export default {
 
     methods: {
         getTime() {
-            this.currentTime = this.$moment().format("H:mm:ss");
-        },
-        getDate() {
-            this.currentDate = this.$moment().format("LL dddd");
+            let newMoment = this.$moment();
+            this.currentTime = newMoment.format("H:mm");
+            this.currentDate = newMoment.format("LL dddd");
         }
     }
 
