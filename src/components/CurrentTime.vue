@@ -1,17 +1,19 @@
 <template>
-    <div class="current-time">
-        <div class="day-time">
-            <p id="day-now">{{ currentDay }}</p>
-            <p id="time-now">{{ currentTime }}</p>
-        </div>
-        <div class="date">
-            <p id="date date-now" >{{ currentDate }}</p>
-            <p id="date lunar-date-now">{{ getFormatLunarDate }}</p>
+    <div class="current-time divide-line">
+        <div class="time-container">
+            <div class="time">
+                <p id="time-now">{{ hour }}<span id="colon">:</span>{{ minute }}</p>
+            </div>
+            <div class="date">
+                <p id="date-now" >{{ currentDate }}</p>
+                <p id="date-now">{{ getFormatLunarDate }}</p>
+            </div>
         </div>
     </div>
 </template>
 
 <script>
+
 const lunarMonths = [
     '正月', '二月', '三月', '四月', '五月', '六月',
     '七月', '八月', '九月', '十月', '冬月', '腊月'
@@ -26,9 +28,9 @@ export default {
     
     data() {
         return {
-            currentTime: "",
+            hour: "",
+            minute: "",
             currentDate: "",
-            currentDay: "",
             lunarMonth: 0,
             lunarDate: 0
         }
@@ -62,9 +64,9 @@ export default {
     },
     methods: {
         updateDate(moment) {
-            this.currentTime = moment.format("H:mm:ss");
-            this.currentDate = moment.format("LL");
-            this.currentDay = moment.format("dddd");
+            this.hour = moment.format("HH");
+            this.minute = moment.format("mm");
+            this.currentDate = moment.format("LL dddd");
         },
         updateLunarDate(moment) {
             this.lunarMonth = moment.lunar().month();
@@ -78,20 +80,38 @@ export default {
 
 <style scoped>
 .current-time {
-    line-height: 0.3;
+    display: flex;
+    flex-direction: column;
 }
 
-p {
 
+.time-container{
+    text-align: left;
 }
 
-#day-now {
-    font-size: 2.5em;
-}
 #time-now {
-    font-size: 3em;
+    margin-top: -1vh;
+    margin-bottom: 0;
+    margin-left: 5vw;
+    font-size: 10em;
 }
 
-.date {
+#time-now span#colon {
+  animation: blink 1.5s step-start 0s infinite;
 }
+
+@keyframes blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+#date-now {
+    margin-left: 7vw;
+    margin-top: 0;
+    margin-bottom: 0;
+    font-size: 2em;
+}
+
+
 </style>

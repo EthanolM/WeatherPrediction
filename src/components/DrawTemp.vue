@@ -1,10 +1,12 @@
 <template>
     <div class="draw-temp">
-        <canvas ref="myCanvas" style="border:0px solid #d3d3d3;"></canvas>
+        <canvas ref="myCanvas"></canvas>
     </div>
 </template>
 
 <script>
+
+// Reference: https://ask.csdn.net/questions/7761579
 function getCtrlPoint(ps,i,a,b) {
     if(!a||!b){
         a=0.25;
@@ -22,29 +24,31 @@ function getCtrlPoint(ps,i,a,b) {
 }
 
 function drawNumber(ctx, point, weatherData, direction) {
-    ctx.fillStyle = 'black'; // 设置数字颜色
-    ctx.font = '12px Arial'; // 设置字体大小和样式
+    ctx.font = 'bold 35px Arial'; 
 
-    let number, yAxis;
+    let number, xAxis, yAxis;
     if (direction == 0) {
         number = weatherData.tempMax;
+        xAxis = point.x - 10;
         yAxis = point.y - 15;
     }
     else {
         number = weatherData.tempMin;
-        yAxis = point.y + 20;
+        xAxis = point.x - 20;
+        yAxis = point.y + 40;
     }
-    ctx.fillText(number, point.x - 7, yAxis);
+    ctx.fillStyle = "rgba(255, 255, 255, 1)";
+    ctx.fillText(number + "°", xAxis, yAxis);
 }
 
 function drawCurve(ctx, points, fillStyle, strokeStyle, weatherData, direction) {
     ctx.strokeStyle = strokeStyle;
-    ctx.lineWidth = 4;
+    ctx.lineWidth = 3;
 
     for (let i = 0; i < points.length; i++) {
         ctx.fillStyle = fillStyle;
         ctx.beginPath();
-        ctx.arc(points[i].x,points[i].y, 10, 0, 2*Math.PI, true);
+        ctx.arc(points[i].x,points[i].y, 7, 0, 2*Math.PI, true);
         ctx.closePath();
         ctx.fill();
         drawNumber(ctx, points[i], weatherData[i], direction);
@@ -77,12 +81,16 @@ export default {
 
     methods: {
         draw() {
+            if (Object.keys(this.sevenDaysWeather).length === 0) {
+                console.log("no data");
+            }
+            console.log(this.sevenDaysWeather);
             const canvas = this.$refs.myCanvas;
             const width = window.innerWidth * 0.97;
             canvas.width = width; // 设置 canvas 实际的绘图宽度（单位：px）
-            canvas.height = 300;  // 设置 canvas 实际的绘图高度（单位：px）
+            canvas.height = 200;  // 设置 canvas 实际的绘图高度（单位：px）
             const ctx = canvas.getContext('2d');
-            
+            ctx.globalAlpha = 0.8;
             
             let minTemp = 1000, maxTemp = -1000;
 
@@ -100,17 +108,17 @@ export default {
             let tempScale = drawAreaPixel / tempDiff;
             for (let i = 0; i < 7; i++) {
                 let xAxis = (width/7) * (i) + (width/7) / 2;
-                let maxTempYAxis = 140 - (Number(this.sevenDaysWeather[i].tempMax) + Math.abs(minTemp)) * tempScale;
+                let maxTempYAxis = 90 - (Number(this.sevenDaysWeather[i].tempMax) + Math.abs(minTemp)) * tempScale;
                 
                 maxTemps.push({x:xAxis, y:maxTempYAxis});
 
-                let minTempYAxis = 160 + (drawAreaPixel - (Number(this.sevenDaysWeather[i].tempMin) + Math.abs(minTemp)) * tempScale);
+                let minTempYAxis = 110 + (drawAreaPixel - (Number(this.sevenDaysWeather[i].tempMin) + Math.abs(minTemp)) * tempScale);
                 minTemps.push({x:xAxis, y:minTempYAxis});
             }
             //console.log(dayTemp);
             
-            drawCurve(ctx, maxTemps, "orange", "orange", this.sevenDaysWeather, 0);
-            drawCurve(ctx, minTemps, "#0f1", "#f01", this.sevenDaysWeather, 1);
+            drawCurve(ctx, maxTemps, "#ffd738", "#ffd738", this.sevenDaysWeather, 0);
+            drawCurve(ctx, minTemps, "#38b6ff", "#38b6ff", this.sevenDaysWeather, 1);
         }
     },
 
@@ -127,8 +135,5 @@ export default {
 </script>
 
 <style>
-.draw-temp {
-    margin-top: 20px;
-}
 </style>
 

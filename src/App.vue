@@ -27,11 +27,11 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2d2c50;
-  margin-top: 20px;
+  margin-top: 2em;
 }
 
 body {
-  background-color: #2b2b33;
+  background-color: #151c29;
   background-attachment: fixed;
 }
 
