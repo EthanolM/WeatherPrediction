@@ -1,8 +1,13 @@
 <template>
     <div class="current-time">
-        <p id="time-now">{{ currentTime }}</p>
-        <p id="date-now">{{ currentDate }}</p>
-        <p id="lunar-date-now">{{ getFormatLunarDate }}</p>
+        <div class="day-time">
+            <p id="day-now">{{ currentDay }}</p>
+            <p id="time-now">{{ currentTime }}</p>
+        </div>
+        <div class="date">
+            <p id="date date-now" >{{ currentDate }}</p>
+            <p id="date lunar-date-now">{{ getFormatLunarDate }}</p>
+        </div>
     </div>
 </template>
 
@@ -23,6 +28,7 @@ export default {
         return {
             currentTime: "",
             currentDate: "",
+            currentDay: "",
             lunarMonth: 0,
             lunarDate: 0
         }
@@ -57,7 +63,8 @@ export default {
     methods: {
         updateDate(moment) {
             this.currentTime = moment.format("H:mm:ss");
-            this.currentDate = moment.format("LL dddd");
+            this.currentDate = moment.format("LL");
+            this.currentDay = moment.format("dddd");
         },
         updateLunarDate(moment) {
             this.lunarMonth = moment.lunar().month();
@@ -69,11 +76,22 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
+.current-time {
+    line-height: 0.3;
+}
+
+p {
+
+}
+
+#day-now {
+    font-size: 2.5em;
+}
 #time-now {
-    font-family: "微软雅黑";
-    font-weight: bold;
-    font-size: 80px;
-    color: aliceblue;
+    font-size: 3em;
+}
+
+.date {
 }
 </style>
