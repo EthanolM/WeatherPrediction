@@ -17,8 +17,8 @@ import CurrentTime from './CurrentTime.vue';
 import FutureWeather from './FutureWeather.vue';
 import CurrentWeather from './CurrentWeather.vue';
 
-const he_key = "42cec5f7b91b449583bef16db13422af";
-const city = "101180101";
+const he_key = "请输入你的和风天气API密钥";
+const city = "101180101" //城市id，这里为郑州;
 
 export default {
 
@@ -98,10 +98,10 @@ export default {
 </script>
 
 <style>
-
 .wrapper {
     display: flex;
-    flex-direction: column; /* 竖直排列 */
+    flex-direction: column;
+    /* 竖直排列 */
 }
 
 .upper-box {
@@ -117,7 +117,7 @@ export default {
     width: 97vw;
     height: 600px;
     margin: 0 auto;
-    border-radius: 25px; 
+    border-radius: 25px;
 }
 
 .divide-line {
@@ -127,11 +127,15 @@ export default {
 .divide-line::after {
     content: "";
     position: absolute;
-    left: 100%; /* 让伪元素在第一列的右边 */
-    top: 10px; /* 控制分割线的起始位置（从上往下偏移） */
-    height: 250px; /* 设置分割线的高度 */
-    width: 2px; /* 设置分割线的宽度 */
-    background-color: rgb(255, 255, 255); /* 设置分割线的颜色 */
+    left: 100%;
+    /* 让伪元素在第一列的右边 */
+    top: 10px;
+    /* 控制分割线的起始位置（从上往下偏移） */
+    height: 250px;
+    /* 设置分割线的高度 */
+    width: 2px;
+    /* 设置分割线的宽度 */
+    background-color: rgb(255, 255, 255);
+    /* 设置分割线的颜色 */
 }
-
 </style>
